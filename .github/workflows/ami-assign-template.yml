@@ -40,7 +40,7 @@ jobs:
         run: |
           TOOLKIT_VERSION="${{ inputs.TOOLKIT_VERSION || 'default' }}"
           echo "Downloading assign_ami_to_template_bulk.sh script from toolkit version $TOOLKIT_VERSION..."
-          wget https://raw.githubusercontent.com/inqwise/ansible-automation-toolkit/${TOOLKIT_VERSION}/scripts/assign_ami_to_template_bulk.sh -O assign_ami_to_template_bulk.sh
+          wget https://raw.githubusercontent.com/inqwise/ansible-automation-toolkit/${TOOLKIT_VERSION}/ami/assign_ami_to_template_bulk.sh -O assign_ami_to_template_bulk.sh
           chmod +x assign_ami_to_template_bulk.sh
           echo "assign_ami_to_template_bulk.sh downloaded and made executable."
 
