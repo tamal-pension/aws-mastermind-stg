@@ -21,10 +21,6 @@ on:
         description: 'AWS account ID from AMIs copied (optional)'
         required: false
         default: ''
-      PROFILE:
-        description: 'AWS CLI profile to use (optional)'
-        required: false
-        default: ''
 
 permissions:
   id-token: write   # Required for requesting the JWT
@@ -65,11 +61,6 @@ jobs:
           # Add --source-account-id if SOURCE_ACCOUNT_ID input is provided
           if [[ -n "${{ inputs.SOURCE_ACCOUNT_ID || '' }}" ]]; then
             CMD+=" --source-account-id \"${{ inputs.SOURCE_ACCOUNT_ID || '' }}\""
-          fi
-
-          # Add --profile argument if PROFILE input is provided
-          if [[ -n "${{ inputs.PROFILE || '' }}" ]]; then
-            CMD+=" --profile \"${{ inputs.PROFILE || '' }}\""
           fi
 
           # Execute the command

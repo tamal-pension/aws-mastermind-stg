@@ -13,14 +13,10 @@ on:
         description: 'AWS region for assignment (e.g., eu-west-1)'
         required: false
         default: 'eu-west-1'
-      PROFILE:
-        description: 'AWS CLI profile to use (optional)'
-        required: false
-        default: ''
       MAKE_DEFAULT_VERSION:
         description: 'Make Default Version (true/false)'
         required: false
-        default: 'false'
+        default: 'true'
 
 permissions:
   id-token: write
@@ -52,18 +48,16 @@ jobs:
       - name: Assign AMIs to Templates
         run: |
           # Set variables with defaults based on trigger
-          PROFILE="${{ github.event.inputs.PROFILE || 'pension-stg' }}"
           REGION="${{ github.event.inputs.REGION || 'eu-west-1' }}"
           TOOLKIT_VERSION="${{ github.event.inputs.TOOLKIT_VERSION || 'default' }}"
-          MAKE_DEFAULT_VERSION="${{ github.event.inputs.MAKE_DEFAULT_VERSION || 'false' }}"
+          MAKE_DEFAULT_VERSION="${{ github.event.inputs.MAKE_DEFAULT_VERSION || 'true' }}"
 
-          echo "Profile: $PROFILE"
           echo "Region: $REGION"
           echo "Toolkit Version: $TOOLKIT_VERSION"
           echo "Make Default Version: $MAKE_DEFAULT_VERSION"
 
           # Build the command
-          CMD="./assign_ami_to_template_bulk.sh --profile \"$PROFILE\" --region \"$REGION\" --toolkit-version \"$TOOLKIT_VERSION\""
+          CMD="./assign_ami_to_template_bulk.sh --region \"$REGION\" --toolkit-version \"$TOOLKIT_VERSION\""
 
           # Add --make-default-version if set to true
           if [[ "$MAKE_DEFAULT_VERSION" == "true" ]]; then
