@@ -16,7 +16,7 @@ on:
       PROFILE:
         description: 'AWS CLI profile to use (optional)'
         required: false
-        default: 'pension-stg'
+        default: ''
       MAKE_DEFAULT_VERSION:
         description: 'Make Default Version (true/false)'
         required: false
