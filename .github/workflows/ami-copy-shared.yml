@@ -44,13 +44,13 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: "arn:aws:iam::339712742264:role/aws-mastermind-workflow-role"
-          aws-region: "${{ inputs.REGION }}"  # Use the input region
+          aws-region: "${{ inputs.REGION || 'eu-west-1' }}"  # Use default if not provided
 
       # Step 3: Download the copy_shared_amis.sh Script
       - name: Download copy_shared_amis.sh script
         run: |
           echo "Downloading copy_shared_amis.sh script from Ansible Automation Toolkit..."
-          wget https://raw.githubusercontent.com/inqwise/ansible-automation-toolkit/${{ inputs.TOOLKIT_VERSION }}/ami/copy_shared_amis.sh -O copy_shared_amis.sh
+          wget https://raw.githubusercontent.com/inqwise/ansible-automation-toolkit/${{ inputs.TOOLKIT_VERSION || 'default' }}/ami/copy_shared_amis.sh -O copy_shared_amis.sh
           chmod +x copy_shared_amis.sh
           echo "copy_shared_amis.sh downloaded and made executable."
 
@@ -60,16 +60,16 @@ jobs:
           echo "Starting AMI copying process..."
 
           # Initialize the command with mandatory arguments
-          CMD="./copy_shared_amis.sh --source-region \"${{ inputs.SOURCE_REGION }}\" --region \"${{ inputs.REGION }}\" --toolkit-version \"${{ inputs.TOOLKIT_VERSION }}\""
+          CMD="./copy_shared_amis.sh --source-region \"${{ inputs.SOURCE_REGION || 'eu-central-1' }}\" --region \"${{ inputs.REGION || 'eu-west-1' }}\" --toolkit-version \"${{ inputs.TOOLKIT_VERSION || 'default' }}\""
 
           # Add --source-account-id if SOURCE_ACCOUNT_ID input is provided
-          if [[ -n "${{ inputs.SOURCE_ACCOUNT_ID }}" ]]; then
-            CMD+=" --source-account-id \"${{ inputs.SOURCE_ACCOUNT_ID }}\""
+          if [[ -n "${{ inputs.SOURCE_ACCOUNT_ID || '' }}" ]]; then
+            CMD+=" --source-account-id \"${{ inputs.SOURCE_ACCOUNT_ID || '' }}\""
           fi
 
           # Add --profile argument if PROFILE input is provided
-          if [[ -n "${{ inputs.PROFILE }}" ]]; then
-            CMD+=" --profile \"${{ inputs.PROFILE }}\""
+          if [[ -n "${{ inputs.PROFILE || '' }}" ]]; then
+            CMD+=" --profile \"${{ inputs.PROFILE || '' }}\""
           fi
 
           # Execute the command
