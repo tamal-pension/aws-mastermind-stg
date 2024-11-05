@@ -1,6 +1,8 @@
-name: AMI Share Workflow
+name: AMI Copy Workflow
 
 on:
+  schedule:
+    - cron: '*/10 * * * *'  # Runs every 10 minutes
   workflow_dispatch:
     inputs:
       TOOLKIT_VERSION:
@@ -29,7 +31,7 @@ permissions:
   contents: read    # Required for actions/checkout
 
 jobs:
-  ami_share:
+  ami_copy:
     runs-on: ubuntu-latest
 
     steps:
