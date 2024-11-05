@@ -21,7 +21,6 @@ on:
 permissions:
   id-token: write
   contents: read
-  secrets: read
 
 jobs:
   ami_assign:
@@ -35,11 +34,11 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: "arn:aws:iam::339712742264:role/aws-mastermind-workflow-role"
-          aws-region: "${{ github.event.inputs.REGION || 'eu-west-1' }}"
+          aws-region: "${{ inputs.REGION || 'eu-west-1' }}"
 
       - name: Download assign_ami_to_template_bulk.sh script
         run: |
-          TOOLKIT_VERSION="${{ github.event.inputs.TOOLKIT_VERSION || 'default' }}"
+          TOOLKIT_VERSION="${{ inputs.TOOLKIT_VERSION || 'default' }}"
           echo "Downloading assign_ami_to_template_bulk.sh script from toolkit version $TOOLKIT_VERSION..."
           wget https://raw.githubusercontent.com/inqwise/ansible-automation-toolkit/${TOOLKIT_VERSION}/scripts/assign_ami_to_template_bulk.sh -O assign_ami_to_template_bulk.sh
           chmod +x assign_ami_to_template_bulk.sh
@@ -48,9 +47,9 @@ jobs:
       - name: Assign AMIs to Templates
         run: |
           # Set variables with defaults based on trigger
-          REGION="${{ github.event.inputs.REGION || 'eu-west-1' }}"
-          TOOLKIT_VERSION="${{ github.event.inputs.TOOLKIT_VERSION || 'default' }}"
-          MAKE_DEFAULT_VERSION="${{ github.event.inputs.MAKE_DEFAULT_VERSION || 'true' }}"
+          REGION="${{ inputs.REGION || 'eu-west-1' }}"
+          TOOLKIT_VERSION="${{ inputs.TOOLKIT_VERSION || 'default' }}"
+          MAKE_DEFAULT_VERSION="${{ inputs.MAKE_DEFAULT_VERSION || 'true' }}"
 
           echo "Region: $REGION"
           echo "Toolkit Version: $TOOLKIT_VERSION"
