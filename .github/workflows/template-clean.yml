@@ -9,15 +9,15 @@ on:
         default: 'eu-west-1'
       KEEP_HISTORY:
         description: 'Number of recent AMIs to keep per app'
-        required: false
+        required: true
         default: '3'
       TOOLKIT_VERSION:
         description: 'Version of the toolkit for script download'
-        required: false
+        required: true
         default: 'default'
       DRY_RUN:
         description: 'Enable dry-run mode'
-        required: false
+        required: true
         default: true
         type: boolean
   schedule:
