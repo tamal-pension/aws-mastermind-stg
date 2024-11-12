@@ -15,11 +15,7 @@ on:
         description: 'Version of the toolkit for script download'
         required: true
         default: 'default'
-      DRY_RUN:
-        description: 'Enable dry-run mode'
-        required: true
-        default: true
-        type: boolean
+  
   schedule:
     - cron: '0 3 * * *'  # Runs daily at 03:00 UTC
 
@@ -35,4 +31,4 @@ jobs:
       TOOLKIT_VERSION: ${{ inputs.TOOLKIT_VERSION || 'default' }}
       REGION: ${{ inputs.REGION || 'eu-west-1' }}
       KEEP_HISTORY: ${{ inputs.KEEP_HISTORY || '3' }}
-      DRY_RUN: ${{ inputs.DRY_RUN || false }}
+      DRY_RUN: false
