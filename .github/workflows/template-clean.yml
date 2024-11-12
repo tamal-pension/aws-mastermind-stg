@@ -35,4 +35,4 @@ jobs:
       TOOLKIT_VERSION: ${{ inputs.TOOLKIT_VERSION || 'default' }}
       REGION: ${{ inputs.REGION || 'eu-west-1' }}
       KEEP_HISTORY: ${{ inputs.KEEP_HISTORY || '3' }}
-      DRY_RUN: ${{ inputs.DRY_RUN == true || true }}
+      DRY_RUN: ${{ inputs.DRY_RUN || false }}
